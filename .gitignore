@@ -1,2 +1,4 @@
-main
-GacekSequencer
+bin/**/*
+*.swp
+out
+in
