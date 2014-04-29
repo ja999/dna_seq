@@ -36,3 +36,10 @@ void Specimen::print() {
   cout<<"Specimen size: "<<specimen_indexes.size()<<endl;
   cout<<"Specimen alignment_length: "<<alignment_length<<endl;
 }
+
+bool Specimen::compare(Specimen a, Specimen b) {
+  if (a.alignment_length < b.alignment_length)
+    return true;
+  else
+    return false;
+}
