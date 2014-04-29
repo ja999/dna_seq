@@ -21,6 +21,10 @@ WordsGraph::~WordsGraph() {
 	delete [] matrix;
 }
 
+int WordsGraph::getSize() {
+	return words.size();
+}
+
 void WordsGraph::print() {
 	for (Word word : words)
 		cout<<"\t"<<word.getText();

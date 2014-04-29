@@ -7,6 +7,7 @@
 #include "specimen.h"
 #include "debug.h"
 #include "word.h"
+#include "wordsGraph.h"
 
 using namespace std;
 
@@ -21,8 +22,12 @@ int getData(vector<Word> &words) {
 }
 
 int main() {
+  srand(unsigned(time(0)));
+
 	vector<Word> words;
 	getData(words);
-	WordsGraph graph(words);
+	WordsGraph *graph = new WordsGraph(words);
+	Specimen spec(graph);
+	spec.print();
 	return 0;
 }

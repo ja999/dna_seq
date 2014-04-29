@@ -11,7 +11,6 @@ class Population {
 	private:
 		vector<Specimen> objects;
 	public:
-		~Population();
 		Population();
 		int size = 100;
 		int randomize();

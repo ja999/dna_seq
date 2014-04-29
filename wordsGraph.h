@@ -13,6 +13,7 @@ class WordsGraph {
 		WordsGraph (vector<Word> words);
 		int ** matrix;
 		int getOverlap(int first, int second);
+		int getSize();
 		void print();
 };
 
