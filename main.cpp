@@ -27,7 +27,9 @@ int main() {
 	vector<Word> words;
 	getData(words);
 	WordsGraph *graph = new WordsGraph(words);
-	Specimen spec(graph);
-	spec.print();
+	Population initial_pop(graph);
+	for (Specimen spec : initial_pop.objects) {
+		spec.print();
+	}
 	return 0;
 }

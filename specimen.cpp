@@ -1,7 +1,7 @@
 #include "specimen.h"
 
 Specimen::Specimen(WordsGraph *newGraph) {
-  graph = newGraph;
+  this->graph = newGraph;
   for (int i=0; i<graph->getSize(); i++) {
     specimen_indexes.push_back(i);
   }

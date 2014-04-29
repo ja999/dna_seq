@@ -8,12 +8,10 @@
 using namespace std;
 
 class Population {
-	private:
-		vector<Specimen> objects;
 	public:
-		Population();
+		vector<Specimen> objects;
+		Population(WordsGraph *newGraph);
 		int size = 100;
-		int randomize();
 };
 
 #endif
