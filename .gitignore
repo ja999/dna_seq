@@ -1,5 +1,4 @@
 bin/**/*
-instances/**/*
 *.swp
 out
 in
