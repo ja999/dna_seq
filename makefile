@@ -1,4 +1,4 @@
-CXXFLAGS += "-std=c++0x"
+CXXFLAGS += "-std=c++11"
 CXX = g++
 DEBUG ?= 1
 ifeq ($(DEBUG), 1)
@@ -12,11 +12,11 @@ main: word.cpp wordsGraph.cpp specimen.cpp population.cpp main.cpp
 
 tests: testWord testGraph
 
-testWord: word.cpp tests/testWord.cpp 
+testWord: word.cpp tests/testWord.cpp
 	$(CXX) $(CXXFLAGS) word.cpp tests/testWord.cpp -o $(DIR)testWord
 
 testGraph: word.cpp tests/testGraph.cpp wordsGraph.cpp
 	$(CXX) $(CXXFLAGS) word.cpp tests/testGraph.cpp wordsGraph.cpp -o $(DIR)testGraph
 
-clean: 
+clean:
 	rm -f bin/*
