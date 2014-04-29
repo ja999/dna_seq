@@ -9,15 +9,15 @@
 using namespace std;
 
 class Word {
-private:
-    static map<char,int> bases;	
-	int hash;
-	string text;
-public:
-	Word(string text);
-	int overlap(vector<int> patternHash);
-	vector<int> getPatternHash();
-	string getText();
+  private:
+    static map<char,int> bases;
+  	int hash;
+  	string text;
+  public:
+  	Word(string text);
+  	int overlap(vector<int> patternHash);
+  	vector<int> getPatternHash();
+  	string getText();
 };
 
 #endif
