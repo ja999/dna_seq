@@ -12,7 +12,9 @@ class Specimen {
 	private:
 		WordsGraph *graph;
 	public:
-		Specimen(WordsGraph *newGraph);
+		Specimen(WordsGraph *graph);
+		static Specimen random(WordsGraph *graph);
+		Specimen scx(Specimen second);
 		vector<int> specimen_indexes;
 		string specimen_aligned = "";
 		int alignment_length = -1;

@@ -10,7 +10,7 @@ using namespace std;
 class Population {
 	public:
 		vector<Specimen> objects;
-		Population(WordsGraph *newGraph);
+		Population(WordsGraph *graph);
 		int size = 100;
 };
 
