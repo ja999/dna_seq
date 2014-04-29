@@ -12,9 +12,9 @@ Specimen::Specimen(WordsGraph *newGraph) {
 int Specimen::calculateFitness() {
 	int result = 0;
 	for (int i=1; i<specimen_indexes.size(); i++) {
-		result += graph->getOverlap(i-1,i);
+		result += graph->getOverlap(specimen_indexes.at(i-1),specimen_indexes.at(i));
 	}
-  alignment_length = result;
+	alignment_length = result;
 	return result;
 }
 
