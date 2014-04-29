@@ -16,6 +16,7 @@ class Specimen {
 		vector<int> specimen_indexes;
 		string specimen_aligned = "";
 		int alignment_length = -1;
+    static bool compare(Specimen a, Specimen b);
 		int calculateFitness();
 		void print();
 };

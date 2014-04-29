@@ -28,6 +28,7 @@ int main() {
 	getData(words);
 	WordsGraph *graph = new WordsGraph(words);
 	Population initial_pop(graph);
+	initial_pop.getNextGeneration();
 	for (Specimen spec : initial_pop.objects) {
 		spec.print();
 	}
