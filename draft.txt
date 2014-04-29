@@ -1,0 +1,13 @@
+Fitness - funkcja oceny
+  sumowanie długości obiektu z populacji, im bliżej n+l-1 tym lepiej - suma overlapu na parach oligonukleotydów - im więcej tym lepiej
+  nie warto - ??? bonus? jeżeli dokładnie n+l-1 - dodajemy
+
+Crossing over
+  Selekcja
+    wybór przodków na podstawie standardowej ruletki
+    im większy fitness tym większa szansa na zostanie wybranym
+    najlepszy musi przejść
+
+Utrzymanie populacji
+  bezpośrednio z populacji wygenerowanej w poprzedniej iteracji dokonujemy
+
