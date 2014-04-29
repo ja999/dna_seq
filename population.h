@@ -3,11 +3,18 @@
 
 #include <vector>
 #include <string>
+#include "specimen.h"
 
 using namespace std;
 
 class Population {
-
+	private:
+		vector<Specimen> objects;
+	public:
+		~Population();
+		Population();
+		int size = 100;
+		int randomize();
 };
 
 #endif

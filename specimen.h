@@ -12,6 +12,7 @@ class Specimen {
 	public:
 		vector<int> specimen_indexes;
 		string specimen_aligned;
+		int alignment_length = -1;
 		int calculateFitness();
 };
 
