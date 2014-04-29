@@ -8,5 +8,13 @@
 using namespace std;
 
 int main() {
-  return 0;
+	vector<Word> words;
+	while(cin) {
+		string word;
+		cin>>word;
+		words.push_back(Word(word));
+	}
+	WordsGraph graph(words);
+	graph.print();
+	return 0;
 }
