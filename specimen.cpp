@@ -16,7 +16,7 @@ Specimen::Specimen(WordsGraph *graph) : graph(graph) {
 	calculateFitness();
 }
 
-Specimen::Specimen(WordsGraph *graph, vector<int> specimen_indexes) : 
+Specimen::Specimen(WordsGraph *graph, vector<int> specimen_indexes) :
 		graph(graph), specimen_indexes(specimen_indexes) {
 	nextIndexes = new int[specimen_indexes.size()];
 	for (int i=0; i<specimen_indexes.size(); i++) {

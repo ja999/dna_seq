@@ -29,11 +29,12 @@ int main() {
 	WordsGraph *graph = new WordsGraph(words);
 	Population initial_pop(graph);
 
-	// for (int i=0; i<100; i++) {
-	initial_pop.evolve();
-	// for (Specimen spec : initial_pop.objects) {
-	// 	spec.printStats();
-	// }
-	// }
+	for (int i=0; i<1000; i++) {
+		initial_pop.evolve();
+		// for (Specimen spec : initial_pop.objects) {
+		// 	spec.printStats();
+		// }
+	}
+	initial_pop.objects.front().printStats();
 	return 0;
 }

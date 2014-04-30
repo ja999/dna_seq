@@ -15,7 +15,7 @@ void Population::crossover() {
 	for (int i=0; i<size/4; i++) {
 		Specimen a = objects[i];
 		Specimen b = objects[rand() % size];
-		Specimen c = a.ppx(b);
+		Specimen c = a.scx(b);
 		objects.push_back(c);
 	}
 
@@ -26,7 +26,7 @@ void Population::crossover() {
 		while (random == random2)
 			random2 = rand() % size;
 		Specimen b = objects[random2];
-		Specimen c = a.ppx(b);
+		Specimen c = a.scx(b);
 		objects.push_back(c);
 	}
 }
@@ -43,17 +43,23 @@ void Population::mutate() {
 }
 
 void Population::getNextGeneration() {
+	vector<Specimen> newObjects;
+	sortPopulation();
 	if (objects.size() > size) {
-		vector<Specimen> newObjects;
 		for (int i=0; i<size; i++) {
 			newObjects.push_back(objects[i]);
 		}
+		objects = newObjects;
 	}
 }
 
 void Population::evolve() {
 	sortPopulation();
+	cout<<"sorted population..."<<endl;
 	crossover();
+	cout<<"crossed over..."<<endl;
 	mutate();
+	cout<<"mustated..."<<endl;
 	getNextGeneration();
+	cout<<"generated new population..."<<endl;
 }
