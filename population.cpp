@@ -12,7 +12,7 @@ void Population::sortPopulation() {
 }
 
 void Population::crossover() {
-	for (int i=0; i<size/4; i++) {
+	for (int i=0; i<size/2; i++) {
 		Specimen a = objects[i];
 		Specimen b = objects[rand() % size];
 		Specimen c = a.scx(b);
@@ -55,11 +55,7 @@ void Population::getNextGeneration() {
 
 void Population::evolve() {
 	sortPopulation();
-	cout<<"sorted population..."<<endl;
 	crossover();
-	cout<<"crossed over..."<<endl;
 	mutate();
-	cout<<"mustated..."<<endl;
 	getNextGeneration();
-	cout<<"generated new population..."<<endl;
 }
