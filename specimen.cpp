@@ -66,6 +66,7 @@ Specimen Specimen::scx(Specimen second) {
 	return child;
 }
 
+
 int Specimen::calculateFitness() {
 	int result = 0;
 	for (int i=1; i<specimen_indexes.size(); i++) {
@@ -82,6 +83,11 @@ void Specimen::print() {
 	cout<<endl;
 	cout<<"Specimen size: "<<specimen_indexes.size()<<endl;
 	cout<<"Specimen alignment_length: "<<alignment_length<<endl;
+}
+
+void Specimen::printStats() {
+  cout<<"Specimen size: "<<specimen_indexes.size()<<endl;
+  cout<<"Specimen alignment_length: "<<alignment_length<<endl;
 }
 
 bool Specimen::compare(Specimen a, Specimen b) {

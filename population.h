@@ -14,6 +14,9 @@ class Population {
 		Population(WordsGraph *graph);
 		void evolve();
 		void getNextGeneration();
+    void sortPopulation();
+    void crossover();
+    void mutate();
 		int size = 100;
 };
 
