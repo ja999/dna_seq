@@ -29,10 +29,14 @@ Specimen Specimen::scx(Specimen second) {
 	vector<int> child_indexes;
 	vector<bool> visited(specimen_indexes.size());
 	child_indexes.reserve(specimen_indexes.size());
-	if (rand()%2)
+	if (rand()%2) {
+		visited.at(specimen_indexes.at(0)) = true;
 		child_indexes.push_back(specimen_indexes.at(0));
-	else
+	}
+	else {
+		visited.at(second.specimen_indexes.at(0)) = true;
 		child_indexes.push_back(second.specimen_indexes.at(0));
+	}
 	int alfa, beta; //kandydaci na następne słowo z każdego rodzica
 	for (int i=1; i<specimen_indexes.size(); i++) {
 		alfa = getNextIndex(child_indexes.back());
