@@ -33,7 +33,7 @@ int main() {
 		// for (Specimen spec : initial_pop.objects) {
 		// 	spec.printStats();
 		// }
-		initial_pop.objects.front().printStats();
 	}
+		initial_pop.objects.front().printStats();
 	return 0;
 }

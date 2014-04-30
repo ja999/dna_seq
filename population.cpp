@@ -12,13 +12,17 @@ void Population::sortPopulation() {
 }
 
 void Population::crossover() {
+	vector<Specimen> offsprings(size/2, objects[0]);
+#pragma omp parallel for
 	for (int i=0; i<size/2; i++) {
 		Specimen a = objects[i];
 		Specimen b = objects[rand() % size];
 		Specimen c = a.scx(b);
-		objects.push_back(c);
+		offsprings.at(i) = c;
 	}
+	objects.insert(objects.end(),offsprings.begin(),offsprings.end());
 
+#pragma omp parallel for
 	for (int i=0; i<size/2; i++) {
 		int random = rand() % size;
 		int random2 = rand() % size;
@@ -27,8 +31,10 @@ void Population::crossover() {
 			random2 = rand() % size;
 		Specimen b = objects[random2];
 		Specimen c = a.scx(b);
-		objects.push_back(c);
+		offsprings.at(i) = c;
 	}
+	objects.insert(objects.end(),offsprings.begin(),offsprings.end());
+
 }
 
 void Population::mutate() {
