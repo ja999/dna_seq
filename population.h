@@ -17,7 +17,7 @@ class Population {
     void sortPopulation();
     void crossover();
     void mutate();
-		int size = 100;
+		int size = 600;
 };
 
 #endif

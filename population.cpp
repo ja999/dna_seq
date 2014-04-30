@@ -19,7 +19,7 @@ void Population::crossover() {
 		objects.push_back(c);
 	}
 
-	for (int i=0; i<size/4; i++) {
+	for (int i=0; i<size/2; i++) {
 		int random = rand() % size;
 		int random2 = rand() % size;
 		Specimen a = objects[random];
@@ -33,12 +33,13 @@ void Population::crossover() {
 
 void Population::mutate() {
 	for (int i = 0; i<size; i++)
-		if (rand() % 100 < 10) {
+		if (rand() % 100 < 50) {
 			int randomSpecimen = rand() % size;
 			int randomWord1 = rand() % objects[randomSpecimen].specimen_indexes.size();
 			int randomWord2 = rand() % objects[randomSpecimen].specimen_indexes.size();
 			Specimen a = objects[randomSpecimen];
 			swap(a.specimen_indexes[randomWord1], a.specimen_indexes[randomWord2]);
+			objects.push_back(a);
 		}
 }
 
