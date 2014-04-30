@@ -2,7 +2,8 @@
 
 Population::Population(WordsGraph *graph) {
 	for (int i=0; i<size; i++) {
-		objects.push_back(Specimen::random(graph));
+		Specimen spec(graph);
+		objects.push_back(spec);
 	}
 }
 
