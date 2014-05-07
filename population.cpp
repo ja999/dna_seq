@@ -39,7 +39,7 @@ void Population::crossover() {
 
 void Population::mutate() {
 	for (int i = 0; i<size; i++)
-		if (rand() % 100 < 50) {
+		if (rand() % 100 < 30) {
 			int randomSpecimen = rand() % size;
 			int randomWord1 = rand() % objects[randomSpecimen].specimen_indexes.size();
 			int randomWord2 = rand() % objects[randomSpecimen].specimen_indexes.size();
@@ -58,6 +58,11 @@ void Population::getNextGeneration() {
 		}
 		objects = newObjects;
 	}
+}
+
+void Population::merge(Population second) {
+	objects.insert(objects.end(),second.objects.begin(),second.objects.end());
+	size +=second.size;
 }
 
 void Population::evolve() {

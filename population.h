@@ -12,6 +12,7 @@ class Population {
 	public:
 		vector<Specimen> objects;
 		Population(WordsGraph *graph);
+		void merge(Population second);
 		void evolve();
 		void getNextGeneration();
     void sortPopulation();
