@@ -4,16 +4,17 @@
 #include <vector>
 #include <algorithm>
 #include <string>
+#include <queue>
 #include "wordsGraph.h"
 
 using namespace std;
 
 class Specimen {
 	private:
-		WordsGraph *graph;
 		int* nextIndexes;
 		int getNextIndex(int index);
 	public:
+		WordsGraph *graph;
 		Specimen(WordsGraph *graph);
 		Specimen(WordsGraph *graph, vector<int> specimen_indexes);
 		static Specimen random(WordsGraph *graph);
@@ -23,6 +24,8 @@ class Specimen {
 		int alignment_length = -1;
 		static bool compare(Specimen a, Specimen b);
 		int calculateFitness();
+		void fix();
+		bool validate();
 		void print();
 		void printStats();
 };

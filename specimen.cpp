@@ -70,6 +70,44 @@ Specimen Specimen::scx(Specimen second) {
 	return child;
 }
 
+void Specimen::fix() {
+  vector<bool> visited(specimen_indexes.size());
+  queue<int> qm1, q2;
+
+  for (int i=0; i<specimen_indexes.size(); i++) {
+    if (visited[specimen_indexes[i]]) {
+      qm1.push(i);
+    } else {
+      visited[specimen_indexes[i]] = true;
+    }
+  }
+  for (int i=0; i<visited.size(); i++) {
+    if (!visited[i]) {
+      q2.push(i);
+    }
+  }
+
+  while(!qm1.empty()) {
+    specimen_indexes[qm1.front()] = q2.front();
+    qm1.pop();
+    q2.pop();
+  }
+}
+
+bool Specimen::validate() {
+  vector<bool> visited(specimen_indexes.size());
+
+  for (int i=0; i<specimen_indexes.size(); i++) {
+    visited[specimen_indexes[i]] = true;
+  }
+
+  for (int i=0; i<visited.size(); i++) {
+    if (!visited[i]) {
+      return false;
+    }
+  }
+  return true;
+}
 
 int Specimen::calculateFitness() {
 	int result = 0;
@@ -85,8 +123,13 @@ void Specimen::print() {
 		cout<<specimen_indexes[i]<<' ';
 	}
 	cout<<endl;
-	cout<<"Specimen size: "<<specimen_indexes.size()<<endl;
+  cout<<"Specimen size: "<<specimen_indexes.size()<<endl;
 	cout<<"Specimen alignment_length: "<<alignment_length<<endl;
+  cout<<"Specimen valid? ";
+  if (validate())
+    cout<<"true"<<endl;
+  else
+    cout<<"false"<<endl;
 }
 
 void Specimen::printStats() {
