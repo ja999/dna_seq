@@ -13,6 +13,7 @@ class Specimen {
 	private:
 		int* nextIndexes;
 		int getNextIndex(int index);
+		void fix(vector<bool>& visited, queue<int>& toFix);
 	public:
 		WordsGraph *graph;
 		Specimen(WordsGraph *graph);
@@ -24,7 +25,6 @@ class Specimen {
 		int alignment_length = -1;
 		static bool compare(Specimen a, Specimen b);
 		int calculateFitness();
-		void fix();
 		bool validate();
 		void print();
 		void printStats();

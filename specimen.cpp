@@ -19,9 +19,19 @@ Specimen::Specimen(WordsGraph *graph) : graph(graph) {
 Specimen::Specimen(WordsGraph *graph, vector<int> specimen_indexes) :
 		graph(graph), specimen_indexes(specimen_indexes) {
 	nextIndexes = new int[specimen_indexes.size()];
+	vector<bool> visited(specimen_indexes.size());
+	queue<int> toFix;
 	for (int i=0; i<specimen_indexes.size(); i++) {
-		nextIndexes[specimen_indexes.at(i)] = specimen_indexes.at((i+1)%specimen_indexes.size());
+		if (!visited.at(specimen_indexes.at(i))) {
+			visited.at(specimen_indexes.at(i)) = true;
+			nextIndexes[specimen_indexes.at(i)] = specimen_indexes.at((i+1)%specimen_indexes.size());
+		}
+		else {
+			toFix.push(i);
+		}
 	}
+	if(!toFix.empty()) 
+		fix(visited, toFix);
 	calculateFitness();
 }
 
@@ -70,43 +80,35 @@ Specimen Specimen::scx(Specimen second) {
 	return child;
 }
 
-void Specimen::fix() {
-  vector<bool> visited(specimen_indexes.size());
-  queue<int> qm1, q2;
+void Specimen::fix(vector<bool>& visited, queue<int>& toFix) {
+	queue<int> lost;
 
-  for (int i=0; i<specimen_indexes.size(); i++) {
-    if (visited[specimen_indexes[i]]) {
-      qm1.push(i);
-    } else {
-      visited[specimen_indexes[i]] = true;
-    }
-  }
-  for (int i=0; i<visited.size(); i++) {
-    if (!visited[i]) {
-      q2.push(i);
-    }
-  }
+	for (int i=0; i<visited.size(); i++) {
+		if (!visited[i]) {
+			lost.push(i);
+		}
+	}
 
-  while(!qm1.empty()) {
-    specimen_indexes[qm1.front()] = q2.front();
-    qm1.pop();
-    q2.pop();
-  }
+	while(!toFix.empty()) {
+		specimen_indexes[toFix.front()] = lost.front();
+		toFix.pop();
+		lost.pop();
+	}
 }
 
 bool Specimen::validate() {
-  vector<bool> visited(specimen_indexes.size());
+	vector<bool> visited(specimen_indexes.size());
 
-  for (int i=0; i<specimen_indexes.size(); i++) {
-    visited[specimen_indexes[i]] = true;
-  }
+	for (int i=0; i<specimen_indexes.size(); i++) {
+		visited[specimen_indexes[i]] = true;
+	}
 
-  for (int i=0; i<visited.size(); i++) {
-    if (!visited[i]) {
-      return false;
-    }
-  }
-  return true;
+	for (int i=0; i<visited.size(); i++) {
+		if (!visited[i]) {
+			return false;
+		}
+	}
+	return true;
 }
 
 int Specimen::calculateFitness() {
@@ -123,18 +125,18 @@ void Specimen::print() {
 		cout<<specimen_indexes[i]<<' ';
 	}
 	cout<<endl;
-  cout<<"Specimen size: "<<specimen_indexes.size()<<endl;
+	cout<<"Specimen size: "<<specimen_indexes.size()<<endl;
 	cout<<"Specimen alignment_length: "<<alignment_length<<endl;
-  cout<<"Specimen valid? ";
-  if (validate())
-    cout<<"true"<<endl;
-  else
-    cout<<"false"<<endl;
+	cout<<"Specimen valid? ";
+	if (validate())
+		cout<<"true"<<endl;
+	else
+		cout<<"false"<<endl;
 }
 
 void Specimen::printStats() {
-  cout<<"Specimen size: "<<specimen_indexes.size()<<endl;
-  cout<<"Specimen alignment_length: "<<alignment_length<<endl;
+	cout<<"Specimen size: "<<specimen_indexes.size()<<endl;
+	cout<<"Specimen alignment_length: "<<alignment_length<<endl;
 }
 
 bool Specimen::compare(Specimen a, Specimen b) {

@@ -35,8 +35,6 @@ void Population::tpx(Specimen first, Specimen second) {
 
   Specimen child1(first.graph, childIndexes1);
   Specimen child2(first.graph, childIndexes2);
-  child1.fix();
-  child2.fix();
 
   objects.push_back(child1);
   objects.push_back(child2);
