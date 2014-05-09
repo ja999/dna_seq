@@ -22,12 +22,17 @@ int getData(vector<Word> &words) {
 }
 
 int main(int argc, char* argv[]) {
+	if (argc < 2) {
+		cout<<"I need N... as argument."<<endl;
+		return 0;
+	}
   srand(unsigned(time(0)));
 	vector<Population*> populations;
 	int popSize = 10;
 	vector<Word> words;
 	getData(words);
-	WordsGraph *graph = new WordsGraph(words);
+	WordsGraph *graph = new WordsGraph(words, atoi(argv[1]));
+	cout<<graph->getN()<<endl;
 	/*
 	Population initial_pop(graph);
 	for (int i=0; i<50; i++) {
@@ -36,7 +41,7 @@ int main(int argc, char* argv[]) {
 	}*/
 	for (int i=0; i<popSize; i++) {
 		//Population pop(graph);
-		populations.push_back(new Population(graph, atoi(argv[1])));
+		populations.push_back(new Population(graph));
 	}
 	while(populations.size() > 0) {
 		for (int i=0; i<10; i++) {

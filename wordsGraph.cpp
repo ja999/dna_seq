@@ -1,6 +1,6 @@
 #include "wordsGraph.h"
 
-WordsGraph::WordsGraph(vector<Word> words) {
+WordsGraph::WordsGraph(vector<Word> words, int n) : n(n) {
 	this->words = words;
 	matrix = new int* [words.size()];
 	for (int i=0; i<words.size(); i++) {
@@ -19,6 +19,14 @@ WordsGraph::~WordsGraph() {
 	for (int i=0; i<words.size(); i++)
 		delete [] matrix[i];
 	delete [] matrix;
+}
+
+Word WordsGraph::getWord(int i) {
+	return words.at(i);
+}
+
+int WordsGraph::getN() {
+	return n;
 }
 
 int WordsGraph::getSize() {

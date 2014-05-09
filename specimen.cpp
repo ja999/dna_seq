@@ -114,11 +114,18 @@ bool Specimen::validate() {
 }
 
 int Specimen::calculateFitness() {
-	int result = 0;
+	int word_length = graph->getWord(specimen_indexes.at(0)).getText().size();
+	int length = word_length;
+	int result;
 	for (int i=1; i<specimen_indexes.size(); i++) {
-		result += graph->getOverlap(specimen_indexes.at(i-1),specimen_indexes.at(i));
+		length += graph->getOverlap(specimen_indexes.at(i-1),specimen_indexes.at(i));
+		if (length <= graph->getN()) {
+			result = i+1;
+		}
 	}
-	alignment_length = result;
+	//cout<<"len "<<length<<endl;
+	full_alignment_length = length;
+	fitness = result;
 	return result;
 }
 
@@ -128,7 +135,8 @@ void Specimen::print() {
 	}
 	cout<<endl;
 	cout<<"Specimen size: "<<specimen_indexes.size()<<endl;
-	cout<<"Specimen alignment_length: "<<alignment_length<<endl;
+	cout<<"Specimen fitness: "<<fitness<<endl;
+	cout<<"Specimen full_alignment_length: "<<full_alignment_length<<endl;
 	cout<<"Specimen valid? ";
 	if (validate())
 		cout<<"true"<<endl;
@@ -138,12 +146,15 @@ void Specimen::print() {
 
 void Specimen::printStats() {
 	cout<<"Specimen size: "<<specimen_indexes.size()<<endl;
-	cout<<"Specimen alignment_length: "<<alignment_length<<endl;
+	cout<<"Specimen fitness: "<<fitness<<endl;
+	cout<<"Specimen full_alignment_length: "<<full_alignment_length<<endl;
+	if(fitness == specimen_indexes.size())
+		exit(0);
 }
 
 bool Specimen::compare(Specimen a, Specimen b) {
-	if (a.alignment_length < b.alignment_length)
-		return true;
+	if (a.fitness == b.fitness)
+		return a.full_alignment_length < b.full_alignment_length;
 	else
-		return false;
+		return a.fitness > b.fitness;
 }

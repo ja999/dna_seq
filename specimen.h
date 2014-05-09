@@ -14,6 +14,8 @@ class Specimen {
 		int* nextIndexes;
 		int getNextIndex(int index);
 		void fix(vector<bool>& visited, queue<int>& toFix);
+		int fitness = -1;
+		int full_alignment_length = -1;
 	public:
 		WordsGraph *graph;
 		Specimen(WordsGraph *graph);
@@ -22,7 +24,6 @@ class Specimen {
 		Specimen scx(Specimen second);
 		vector<int> specimen_indexes;
 		string specimen_aligned = "";
-		int alignment_length = -1;
 		static bool compare(Specimen a, Specimen b);
 		int calculateFitness();
 		bool validate();

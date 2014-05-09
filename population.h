@@ -12,7 +12,7 @@ using namespace std;
 class Population {
 	public:
 		vector<Specimen> objects;
-		Population(WordsGraph *graph, int n);
+		Population(WordsGraph *graph);
 		void merge(Population second);
 		void tpx(Specimen first, Specimen second);
 		void evolve();
@@ -21,7 +21,6 @@ class Population {
 		void scxCrossover();
 		void tpxCrossover();
 		void mutate();
-		int n;
 		int size = 1200;
 };
 

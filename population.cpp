@@ -1,6 +1,6 @@
 #include "population.h"
 
-Population::Population(WordsGraph *graph, int n) : n(n) {
+Population::Population(WordsGraph *graph) {
 	for (int i=0; i<size; i++) {
 		Specimen spec(graph);
 		objects.push_back(spec);
