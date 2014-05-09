@@ -1,6 +1,6 @@
 #include "population.h"
 
-Population::Population(WordsGraph *graph) {
+Population::Population(WordsGraph *graph, int n) : n(n) {
 	for (int i=0; i<size; i++) {
 		Specimen spec(graph);
 		objects.push_back(spec);
@@ -8,39 +8,39 @@ Population::Population(WordsGraph *graph) {
 }
 
 void Population::tpx(Specimen first, Specimen second) {
-  int random1 = rand() % first.specimen_indexes.size(),
-      random2 = rand() % first.specimen_indexes.size(),
-      random3 = rand() % first.specimen_indexes.size();
+	int random1 = rand() % first.specimen_indexes.size(),
+	random2 = rand() % first.specimen_indexes.size(),
+	random3 = rand() % first.specimen_indexes.size();
 
-  vector<int> childIndexes1, childIndexes2;
-  vector<int> crossoverPionts;
-  crossoverPionts.push_back(0);
-  crossoverPionts.push_back(random1);
-  crossoverPionts.push_back(random2);
-  crossoverPionts.push_back(random3);
-  crossoverPionts.push_back(first.specimen_indexes.size());
-  sort(crossoverPionts.begin(), crossoverPionts.end());
+	vector<int> childIndexes1, childIndexes2;
+	vector<int> crossoverPionts;
+	crossoverPionts.push_back(0);
+	crossoverPionts.push_back(random1);
+	crossoverPionts.push_back(random2);
+	crossoverPionts.push_back(random3);
+	crossoverPionts.push_back(first.specimen_indexes.size());
+	sort(crossoverPionts.begin(), crossoverPionts.end());
 
-  for (int i=0; i<crossoverPionts.size()-1; i++) {
-    for (int j=crossoverPionts[i]; j<crossoverPionts[i+1]; j++) {
-      if (i % 2) {
-        childIndexes1.push_back(first.specimen_indexes[j]);
-        childIndexes2.push_back(second.specimen_indexes[j]);
-      } else {
-        childIndexes1.push_back(second.specimen_indexes[j]);
-        childIndexes2.push_back(first.specimen_indexes[j]);
-      }
-    }
-  }
+	for (int i=0; i<crossoverPionts.size()-1; i++) {
+		for (int j=crossoverPionts[i]; j<crossoverPionts[i+1]; j++) {
+			if (i % 2) {
+				childIndexes1.push_back(first.specimen_indexes[j]);
+				childIndexes2.push_back(second.specimen_indexes[j]);
+			} else {
+				childIndexes1.push_back(second.specimen_indexes[j]);
+				childIndexes2.push_back(first.specimen_indexes[j]);
+			}
+		}
+	}
 
-  Specimen child1(first.graph, childIndexes1);
-  Specimen child2(first.graph, childIndexes2);
+	Specimen child1(first.graph, childIndexes1);
+	Specimen child2(first.graph, childIndexes2);
 
-  objects.push_back(child1);
-  objects.push_back(child2);
+	objects.push_back(child1);
+	objects.push_back(child2);
 
-  child1.print();
-  child2.print();
+	//child1.print();
+	//child2.print();
 }
 
 void Population::sortPopulation() {
@@ -114,8 +114,10 @@ void Population::merge(Population second) {
 
 void Population::evolve() {
 	sortPopulation();
+	//cout<<"scx"<<endl;
 	scxCrossover();
-	// tpxCrossover();
+	//cout<<"tpx"<<endl;
+	tpxCrossover();
 	mutate();
 	getNextGeneration();
 }

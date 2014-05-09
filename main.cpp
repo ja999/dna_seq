@@ -21,7 +21,7 @@ int getData(vector<Word> &words) {
 	return 0;
 }
 
-int main() {
+int main(int argc, char* argv[]) {
   srand(unsigned(time(0)));
 	vector<Population*> populations;
 	int popSize = 10;
@@ -36,7 +36,7 @@ int main() {
 	}*/
 	for (int i=0; i<popSize; i++) {
 		//Population pop(graph);
-		populations.push_back(new Population(graph));
+		populations.push_back(new Population(graph, atoi(argv[1])));
 	}
 	while(populations.size() > 0) {
 		for (int i=0; i<10; i++) {

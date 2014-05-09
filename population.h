@@ -12,15 +12,16 @@ using namespace std;
 class Population {
 	public:
 		vector<Specimen> objects;
-		Population(WordsGraph *graph);
+		Population(WordsGraph *graph, int n);
 		void merge(Population second);
-    	void tpx(Specimen first, Specimen second);
+		void tpx(Specimen first, Specimen second);
 		void evolve();
 		void getNextGeneration();
-    void sortPopulation();
-    void scxCrossover();
-    void tpxCrossover();
-    void mutate();
+		void sortPopulation();
+		void scxCrossover();
+		void tpxCrossover();
+		void mutate();
+		int n;
 		int size = 1200;
 };
 

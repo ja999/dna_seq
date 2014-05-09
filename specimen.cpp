@@ -90,6 +90,8 @@ void Specimen::fix(vector<bool>& visited, queue<int>& toFix) {
 	}
 
 	while(!toFix.empty()) {
+		nextIndexes[specimen_indexes.at((specimen_indexes.size()+toFix.front()-1)%specimen_indexes.size())] = lost.front();
+		nextIndexes[lost.front()] = specimen_indexes.at((toFix.front()+1)%specimen_indexes.size());
 		specimen_indexes[toFix.front()] = lost.front();
 		toFix.pop();
 		lost.pop();
