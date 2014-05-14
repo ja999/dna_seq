@@ -33,16 +33,11 @@ int main(int argc, char* argv[]) {
 	getData(words);
 	WordsGraph *graph = new WordsGraph(words, atoi(argv[1]));
 	cout<<graph->getN()<<endl;
-	/*
-	Population initial_pop(graph);
-	for (int i=0; i<50; i++) {
-		initial_pop.evolve();
-		initial_pop.objects.front().printStats();
-	}*/
+
 	for (int i=0; i<POPULATION_COUNT; i++) {
-		//Population pop(graph);
 		populations.push_back(new Population(graph));
 	}
+
 	while(populations.size() > 0) {
 		for (int i=0; i<GENERATION_COUNT; i++) {
 			cout<<populations.size()<<endl;
@@ -50,12 +45,11 @@ int main(int argc, char* argv[]) {
 				pop->evolve();
 				pop->objects.front().printStats();
 			}
-			// for (Specimen spec : initial_pop.objects) {
-			// 	spec.printStats();
-			// }
 		}
+
 		for (Population* pop : populations)
 			pop->objects.front().printStats();
+
 		for (int i=0; i<populations.size()/2; i++) {
 			populations.at(i)->merge(*(populations.at(i+1)));
 			populations.erase(populations.begin()+i+1);
