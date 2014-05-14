@@ -14,8 +14,8 @@ class Specimen {
 		int* nextIndexes;
 		int getNextIndex(int index);
 		void fix(vector<bool>& visited, queue<int>& toFix);
-		int fitness = -1;
-		int full_alignment_length = -1;
+		int fitness;
+		int full_alignment_length;
 	public:
 		WordsGraph *graph;
 		Specimen(WordsGraph *graph);
@@ -25,10 +25,12 @@ class Specimen {
 		vector<int> specimen_indexes;
 		string specimen_aligned = "";
 		static bool compare(Specimen a, Specimen b);
+		//bool Specimen::operator==(const Specimen& other);
 		int calculateFitness();
 		bool validate();
 		void print();
 		void printStats();
+		//static bool(*compare_pt)(Specimen,Specimen) = Specimen::compare;
 };
 
 #endif

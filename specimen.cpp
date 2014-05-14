@@ -4,7 +4,7 @@ int Specimen::getNextIndex(int index) {
 	return nextIndexes[index];
 }
 
-Specimen::Specimen(WordsGraph *graph) : graph(graph) {
+Specimen::Specimen(WordsGraph *graph) : graph(graph), fitness(-1), full_alignment_length(-1) {
 	nextIndexes = new int[graph->getSize()];
 	for (int i=0; i<graph->getSize(); i++) {
 		specimen_indexes.push_back(i);
@@ -17,7 +17,7 @@ Specimen::Specimen(WordsGraph *graph) : graph(graph) {
 }
 
 Specimen::Specimen(WordsGraph *graph, vector<int> specimen_indexes) :
-		graph(graph), specimen_indexes(specimen_indexes) {
+		graph(graph), specimen_indexes(specimen_indexes), fitness(-1), full_alignment_length(-1) {
 	nextIndexes = new int[specimen_indexes.size()];
 	vector<bool> visited(specimen_indexes.size());
 	queue<int> toFix;
@@ -153,8 +153,26 @@ void Specimen::printStats() {
 }
 
 bool Specimen::compare(Specimen a, Specimen b) {
+	if (a.fitness == b.fitness) {
+		if (a.full_alignment_length == b.full_alignment_length)
+			return a.specimen_indexes < b.specimen_indexes;
+		else
+			return a.full_alignment_length < b.full_alignment_length;
+	}
+	else {
+		return a.fitness > b.fitness;
+	}
+}
+/*
+bool Specimen::compare(Specimen a, Specimen b) {
 	if (a.fitness == b.fitness)
 		return a.full_alignment_length < b.full_alignment_length;
 	else
 		return a.fitness > b.fitness;
 }
+*/
+/*
+bool Specimen::operator==(const Specimen& other) {
+	return specimen_indexes == other.specimen_indexes;
+}
+*/

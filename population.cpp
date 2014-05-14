@@ -1,9 +1,12 @@
 #include "population.h"
 
 Population::Population(WordsGraph *graph) {
-	for (int i=0; i<size; i++) {
+
+  	bool(*fn_pt)(Specimen,Specimen) = Specimen::compare;
+	specimenSet = new set<Specimen,bool(*)(Specimen,Specimen)>(fn_pt);
+	while (specimenSet->size() <= size) {
 		Specimen spec(graph);
-		objects.push_back(spec);
+		specimenSet->insert(spec);
 	}
 }
 
@@ -36,14 +39,17 @@ void Population::tpx(Specimen first, Specimen second) {
 	Specimen child1(first.graph, childIndexes1);
 	Specimen child2(first.graph, childIndexes2);
 
-	objects.push_back(child1);
-	objects.push_back(child2);
+	specimenSet->insert(child1);
+	specimenSet->insert(child2);
 
 	//child1.print();
 	//child2.print();
 }
 
 void Population::sortPopulation() {
+	//objects.clear();
+	objects.assign(specimenSet->begin(),specimenSet->end());
+	//objects = *(new vector<Specimen>(specimenSet->begin(),specimenSet->end());
 	sort(objects.begin(), objects.end(), Specimen::compare);
 }
 
@@ -55,7 +61,7 @@ void Population::scxCrossover() {
 		Specimen c = a.scx(b);
 		offsprings.at(i) = c;
 	}
-	objects.insert(objects.end(),offsprings.begin(),offsprings.end());
+	specimenSet->insert(offsprings.begin(),offsprings.end());
 
 	for (int i=0; i<size/4; i++) {
 		int random = rand() % size;
@@ -67,7 +73,7 @@ void Population::scxCrossover() {
 		Specimen c = a.scx(b);
 		offsprings.at(i) = c;
 	}
-	objects.insert(objects.end(),offsprings.begin(),offsprings.end());
+	specimenSet->insert(offsprings.begin(),offsprings.end());
 }
 
 void Population::tpxCrossover() {
@@ -90,23 +96,24 @@ void Population::mutate() {
 			int randomWord2 = rand() % objects[randomSpecimen].specimen_indexes.size();
 			Specimen a = objects[randomSpecimen];
 			swap(a.specimen_indexes[randomWord1], a.specimen_indexes[randomWord2]);
-			objects.push_back(a);
+			specimenSet->insert(a);
 		}
 }
 
 void Population::getNextGeneration() {
-	vector<Specimen> newObjects;
+	//vector<Specimen> newObjects;
 	sortPopulation();
+	specimenSet->clear();
 	if (objects.size() > size) {
 		for (int i=0; i<size; i++) {
-			newObjects.push_back(objects[i]);
+			specimenSet->insert(objects[i]);
 		}
-		objects = newObjects;
+		//specimenSet->insert(newObjects.begin(),newObjects.end());
 	}
 }
 
 void Population::merge(Population second) {
-	objects.insert(objects.end(),second.objects.begin(),second.objects.end());
+	specimenSet->insert(second.specimenSet->begin(),second.specimenSet->end());
 	size +=second.size;
 }
 

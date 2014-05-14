@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 #include <queue>
+#include <set>
 #include "specimen.h"
 
 using namespace std;
@@ -12,6 +13,7 @@ using namespace std;
 class Population {
 	public:
 		vector<Specimen> objects;
+		set<Specimen,bool(*)(Specimen,Specimen)>* specimenSet;//(Specimen::compare);
 		Population(WordsGraph *graph);
 		void merge(Population second);
 		void tpx(Specimen first, Specimen second);
