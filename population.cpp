@@ -49,7 +49,6 @@ void Population::sortPopulation() {
 
 void Population::scxCrossover() {
 	vector<Specimen> offsprings(size/4, objects[0]);
-#pragma omp parallel for
 	for (int i=0; i<size/4; i++) {
 		Specimen a = objects[i];
 		Specimen b = objects[rand() % size];
@@ -58,7 +57,6 @@ void Population::scxCrossover() {
 	}
 	objects.insert(objects.end(),offsprings.begin(),offsprings.end());
 
-#pragma omp parallel for
 	for (int i=0; i<size/4; i++) {
 		int random = rand() % size;
 		int random2 = rand() % size;

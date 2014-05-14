@@ -38,12 +38,14 @@ int main(int argc, char* argv[]) {
 		populations.push_back(new Population(graph));
 	}
 
-	while(populations.size() > 0) {
+	while (populations.size() > 0) {
 		for (int i=0; i<GENERATION_COUNT; i++) {
 			cout<<populations.size()<<endl;
-			for (Population* pop : populations) {
-				pop->evolve();
-				pop->objects.front().printStats();
+
+			#pragma omp parallel for
+			for (int i=0; i<POPULATION_COUNT; i++) {
+				populations[i]->evolve();
+				populations[i]->objects.front().printStats();
 			}
 		}
 
