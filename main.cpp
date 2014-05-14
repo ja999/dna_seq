@@ -8,6 +8,7 @@
 #include "debug.h"
 #include "word.h"
 #include "wordsGraph.h"
+#include "parameters.h"
 
 using namespace std;
 
@@ -28,7 +29,6 @@ int main(int argc, char* argv[]) {
 	}
   srand(unsigned(time(0)));
 	vector<Population*> populations;
-	int popCount = 10;
 	vector<Word> words;
 	getData(words);
 	WordsGraph *graph = new WordsGraph(words, atoi(argv[1]));
@@ -39,12 +39,12 @@ int main(int argc, char* argv[]) {
 		initial_pop.evolve();
 		initial_pop.objects.front().printStats();
 	}*/
-	for (int i=0; i<popCount; i++) {
+	for (int i=0; i<POPULATION_COUNT; i++) {
 		//Population pop(graph);
 		populations.push_back(new Population(graph));
 	}
 	while(populations.size() > 0) {
-		for (int i=0; i<10; i++) {
+		for (int i=0; i<GENERATION_COUNT; i++) {
 			cout<<populations.size()<<endl;
 			for (Population* pop : populations) {
 				pop->evolve();

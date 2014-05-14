@@ -1,0 +1,7 @@
+#ifndef PARAMETERS_H
+#define PARAMETERS_H
+
+#define POPULATION_COUNT 10
+#define GENERATION_COUNT 10
+
+#endif /* PARAMETERS_H */
