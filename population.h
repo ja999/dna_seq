@@ -23,7 +23,7 @@ class Population {
 		void scxCrossover();
 		void tpxCrossover();
 		void mutate();
-		int size = 1200;
+		int size = 300;
 };
 
 #endif

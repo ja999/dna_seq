@@ -49,8 +49,8 @@ int main(int argc, char* argv[]) {
 			}
 		}
 
-		for (Population* pop : populations)
-			pop->objects.front().printStats();
+		//for (Population* pop : populations)
+			//pop->objects.front().printStats();
 
 		for (int i=0; i<populations.size()/2; i++) {
 			populations.at(i)->merge(*(populations.at(i+1)));
