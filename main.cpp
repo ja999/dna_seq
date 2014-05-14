@@ -28,7 +28,7 @@ int main(int argc, char* argv[]) {
 	}
   srand(unsigned(time(0)));
 	vector<Population*> populations;
-	int popSize = 10;
+	int popCount = 10;
 	vector<Word> words;
 	getData(words);
 	WordsGraph *graph = new WordsGraph(words, atoi(argv[1]));
@@ -39,7 +39,7 @@ int main(int argc, char* argv[]) {
 		initial_pop.evolve();
 		initial_pop.objects.front().printStats();
 	}*/
-	for (int i=0; i<popSize; i++) {
+	for (int i=0; i<popCount; i++) {
 		//Population pop(graph);
 		populations.push_back(new Population(graph));
 	}
@@ -54,7 +54,7 @@ int main(int argc, char* argv[]) {
 			// 	spec.printStats();
 			// }
 		}
-		for (Population* pop : populations) 
+		for (Population* pop : populations)
 			pop->objects.front().printStats();
 		for (int i=0; i<populations.size()/2; i++) {
 			populations.at(i)->merge(*(populations.at(i+1)));
