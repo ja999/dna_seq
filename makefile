@@ -1,6 +1,6 @@
 CXXFLAGS += -std=c++0x -fopenmp
 CXX = g++-4.8
-DEBUG ?= 1
+DEBUG ?= 0
 ifeq ($(DEBUG), 1)
 	CXXFLAGS += -g -DDEBUG
 else

@@ -1,7 +1,7 @@
 #ifndef PARAMETERS_H
 #define PARAMETERS_H
 
-#define POPULATION_COUNT 10
+#define POPULATION_COUNT 20
 #define GENERATION_COUNT 15
 
 #endif /* PARAMETERS_H */

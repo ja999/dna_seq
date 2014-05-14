@@ -53,8 +53,10 @@ int main(int argc, char* argv[]) {
 			//pop->objects.front().printStats();
 
 		for (int i=0; i<populations.size()/2; i++) {
-			populations.at(i)->merge(*(populations.at(i+1)));
-			populations.erase(populations.begin()+i+1);
+			populations.at(2*i)->merge(*(populations.at(2*i+1)));
+		}
+		for (int i=1; i<populations.size(); i++) {
+			populations.erase(populations.begin()+i);
 		}
 	}
 	return 0;
