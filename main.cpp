@@ -43,7 +43,7 @@ int main(int argc, char* argv[]) {
 			cout<<populations.size()<<endl;
 
 			#pragma omp parallel for
-			for (int i=0; i<POPULATION_COUNT; i++) {
+			for (int i=0; i<populations.size(); i++) {
 				populations[i]->evolve();
 				populations[i]->objects.front().printStats();
 			}
