@@ -44,7 +44,9 @@ int main(int argc, char* argv[]) {
 
 			#pragma omp parallel for
 			for (int i=0; i<populations.size(); i++) {
+	//printf("pop %d\n", i);
 				populations[i]->evolve();
+	//printf("pop evo %d\n", i);
 				populations[i]->objects.front().printStats();
 			}
 		}

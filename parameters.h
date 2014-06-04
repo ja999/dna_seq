@@ -2,6 +2,6 @@
 #define PARAMETERS_H
 
 #define POPULATION_COUNT 20
-#define GENERATION_COUNT 15
+#define GENERATION_COUNT 5
 
 #endif /* PARAMETERS_H */

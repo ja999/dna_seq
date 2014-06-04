@@ -160,7 +160,7 @@ bool Specimen::compare(Specimen a, Specimen b) {
 			return a.full_alignment_length < b.full_alignment_length;
 	}
 	else {
-		return a.fitness > b.fitness;
+		return a.full_alignment_length < b.full_alignment_length;
 	}
 }
 /*

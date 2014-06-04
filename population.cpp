@@ -54,14 +54,21 @@ void Population::sortPopulation() {
 }
 
 void Population::scxCrossover() {
-	vector<Specimen> offsprings(size/4, objects[0]);
+	vector<Specimen> offsprings;//(size/4, objects[0]);
+	//cout<<"inSCX before for"<<endl;
 	for (int i=0; i<size/4; i++) {
+	//cout<<"inSCX in for i: "<<i<<endl;
 		Specimen a = objects[i];
 		Specimen b = objects[rand() % size];
+		//cout<<"inSCX in for i: "<<i<<" before scx"<<endl;
 		Specimen c = a.scx(b);
-		offsprings.at(i) = c;
+		//cout<<"inSCX in for i: "<<i<<" after scx"<<endl;
+		//offsprings.at(i) = c;
+		offsprings.push_back(c);
 	}
+	//cout<<"inSCX before insert"<<endl;
 	specimenSet->insert(offsprings.begin(),offsprings.end());
+	//cout<<"inSCX"<<endl;
 
 	for (int i=0; i<size/4; i++) {
 		int random = rand() % size;
@@ -114,7 +121,7 @@ void Population::getNextGeneration() {
 
 void Population::merge(Population second) {
 	specimenSet->insert(second.specimenSet->begin(),second.specimenSet->end());
-	size +=second.size;
+	size = specimenSet->size();
 }
 
 void Population::evolve() {
@@ -123,6 +130,8 @@ void Population::evolve() {
 	scxCrossover();
 	//cout<<"tpx"<<endl;
 	tpxCrossover();
+	//cout<<"mutate"<<endl;
 	mutate();
+	//cout<<"next"<<endl;
 	getNextGeneration();
 }
