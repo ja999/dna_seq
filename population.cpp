@@ -11,9 +11,10 @@ Population::Population(WordsGraph *graph) {
 }
 
 void Population::tpx(Specimen first, Specimen second) {
-	int random1 = rand() % first.specimen_indexes.size(),
-	random2 = rand() % first.specimen_indexes.size(),
-	random3 = rand() % first.specimen_indexes.size();
+		/*
+	int random1 = rand() % first.graph->getSize(),
+	random2 = rand() % first.graph->getSize(),
+	random3 = rand() % first.graph->getSize();
 
 	vector<int> childIndexes1, childIndexes2;
 	vector<int> crossoverPionts;
@@ -21,7 +22,7 @@ void Population::tpx(Specimen first, Specimen second) {
 	crossoverPionts.push_back(random1);
 	crossoverPionts.push_back(random2);
 	crossoverPionts.push_back(random3);
-	crossoverPionts.push_back(first.specimen_indexes.size());
+	crossoverPionts.push_back(first.graph->getSize());
 	sort(crossoverPionts.begin(), crossoverPionts.end());
 
 	for (int i=0; i<crossoverPionts.size()-1; i++) {
@@ -44,6 +45,7 @@ void Population::tpx(Specimen first, Specimen second) {
 
 	//child1.print();
 	//child2.print();
+	*/
 }
 
 void Population::sortPopulation() {
@@ -99,10 +101,10 @@ void Population::mutate() {
 	for (int i = 0; i<size; i++)
 		if (rand() % 100 < 30) {
 			int randomSpecimen = rand() % size;
-			int randomWord1 = rand() % objects[randomSpecimen].specimen_indexes.size();
-			int randomWord2 = rand() % objects[randomSpecimen].specimen_indexes.size();
+			int randomWord1 = rand() % objects[randomSpecimen].graph->getSize();
+			int randomWord2 = rand() % objects[randomSpecimen].graph->getSize();
 			Specimen a = objects[randomSpecimen];
-			swap(a.specimen_indexes[randomWord1], a.specimen_indexes[randomWord2]);
+			a.swapIndexes(randomWord1,randomWord2);
 			specimenSet->insert(a);
 		}
 }
@@ -125,11 +127,12 @@ void Population::merge(Population second) {
 }
 
 void Population::evolve() {
+	//cout<<"sortPopulation"<<endl;
 	sortPopulation();
 	//cout<<"scx"<<endl;
 	scxCrossover();
 	//cout<<"tpx"<<endl;
-	tpxCrossover();
+	//tpxCrossover();
 	//cout<<"mutate"<<endl;
 	mutate();
 	//cout<<"next"<<endl;

@@ -2,6 +2,7 @@
 #define SPECIMEN_H
 
 #include <vector>
+#include <array>
 #include <algorithm>
 #include <string>
 #include <queue>
@@ -16,13 +17,14 @@ class Specimen {
 		void fix(vector<bool>& visited, queue<int>& toFix);
 		int fitness;
 		int full_alignment_length;
+		int start;
 	public:
 		WordsGraph *graph;
 		Specimen(WordsGraph *graph);
-		Specimen(WordsGraph *graph, vector<int> specimen_indexes);
+		Specimen(WordsGraph *graph, int* nextIndexes, int start);
 		static Specimen random(WordsGraph *graph);
 		Specimen scx(Specimen second);
-		vector<int> specimen_indexes;
+		//vector<int> specimen_indexes;
 		string specimen_aligned = "";
 		static bool compare(Specimen a, Specimen b);
 		//bool Specimen::operator==(const Specimen& other);
@@ -30,6 +32,7 @@ class Specimen {
 		bool validate();
 		void print();
 		void printStats();
+		void swapIndexes(int a, int b);
 		//static bool(*compare_pt)(Specimen,Specimen) = Specimen::compare;
 };
 

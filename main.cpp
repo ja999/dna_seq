@@ -34,9 +34,11 @@ int main(int argc, char* argv[]) {
 	WordsGraph *graph = new WordsGraph(words, atoi(argv[1]));
 	cout<<graph->getN()<<endl;
 
+	cout<<"TEST"<<endl;
 	for (int i=0; i<POPULATION_COUNT; i++) {
 		populations.push_back(new Population(graph));
 	}
+	cout<<"TEST"<<endl;
 
 	while (populations.size() > 0) {
 		for (int i=0; i<GENERATION_COUNT; i++) {
@@ -44,15 +46,15 @@ int main(int argc, char* argv[]) {
 
 			#pragma omp parallel for
 			for (int i=0; i<populations.size(); i++) {
-	//printf("pop %d\n", i);
 				populations[i]->evolve();
-	//printf("pop evo %d\n", i);
-				populations[i]->objects.front().printStats();
+				//populations[i]->objects.front().printStats();
 			}
 		}
 
-		//for (Population* pop : populations)
-			//pop->objects.front().printStats();
+		for (Population* pop : populations)
+			pop->objects.front().printStats();
+		if (populations.size() == 1)
+			return 0;
 
 		for (int i=0; i<populations.size()/2; i++) {
 			populations.at(2*i)->merge(*(populations.at(2*i+1)));
