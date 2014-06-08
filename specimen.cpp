@@ -94,7 +94,8 @@ Specimen Specimen::scx(Specimen second) {
 				}
 			}
 		}
-		if (graph->getOverlap(tmp, alfa) * (rand()%100) < graph->getOverlap(tmp, beta) * (rand()%100)) {
+		//if (graph->getOverlap(tmp, alfa) < graph->getOverlap(tmp, beta)) {
+		if (graph->getOverlap(tmp, alfa) * (85 + rand()%15) < graph->getOverlap(tmp, beta) * (85 + rand()%15)) {
 			visited.at(alfa) = true;
 			childNextIndexes[tmp] = alfa;
 			tmp = alfa;
