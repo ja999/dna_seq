@@ -2,6 +2,7 @@
 #define SPECIMEN_H
 
 #include <vector>
+#include <fstream>
 #include <iterator>
 #include <algorithm>
 #include <string>
@@ -37,7 +38,9 @@ class Specimen {
 		int calculateFitness();
 		bool validate() const;
 		void print() const;
+		void print(ofstream& output) const;
 		void printStats() const;
+		void printStats(ofstream& output) const;
 		void swapWords(int a, int b);
 		Specimen mutate();
 		//static bool(*compare_pt)(Specimen,Specimen) = Specimen::compare;

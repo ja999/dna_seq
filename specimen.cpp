@@ -211,12 +211,39 @@ void Specimen::print() const{
 		cout<<"false"<<endl;
 }
 
+void Specimen::print(ofstream& output) const{
+	int tmp = start;
+	for (int i=0; i<graph->getSize(); i++) {
+		output<<tmp<<' ';
+		tmp = nextIndexes[tmp];
+	}
+	output<<endl;
+	output<<"Specimen size: "<<graph->getSize()<<endl;
+	output<<"Specimen fitness: "<<fitness<<endl;
+	output<<"Specimen full_alignment_length: "<<full_alignment_length<<endl;
+	output<<"Specimen valid? ";
+	if (validate())
+		output<<"true"<<endl;
+	else
+		output<<"false"<<endl;
+}
+
 void Specimen::printStats() const {
 	cout<<"Specimen size: "<<graph->getSize()<<endl;
 	cout<<"Specimen fitness: "<<fitness<<endl;
 	cout<<"Specimen full_alignment_length: "<<full_alignment_length<<endl;
 	if(fitness == graph->getSize()) {
 		this->print();
+		exit(0);
+	}
+}
+void Specimen::printStats(ofstream& output) const {
+	output<<"Specimen size: "<<graph->getSize()<<endl;
+	output<<"Specimen fitness: "<<fitness<<endl;
+	output<<"Specimen full_alignment_length: "<<full_alignment_length<<endl;
+	if(fitness == graph->getSize()) {
+		this->print(output);
+		output.close();
 		exit(0);
 	}
 }
