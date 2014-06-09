@@ -19,10 +19,14 @@ Specimen::Specimen(WordsGraph *graph) : graph(graph), fitness(-1), full_alignmen
 	}
 	start = rand()%graph->getSize();
 	calculateFitness();
+			if(!validate()) {
+				cout<<"gr"<<endl;
+				exit(0);
+			}
 }
 
 Specimen::Specimen(WordsGraph *graph, int * nextIndexes, int start) :
-		graph(graph), nextIndexes(nextIndexes), start(start), fitness(-1), full_alignment_length(-1) {
+		graph(graph), start(start), fitness(-1), full_alignment_length(-1) {
 		obj++;
 	this->nextIndexes = new int[graph->getSize()];
 	copy(nextIndexes, nextIndexes + graph->getSize(), this->nextIndexes);
@@ -34,6 +38,10 @@ Specimen::Specimen(const Specimen& other) :
 		obj++;
 	nextIndexes = new int[graph->getSize()];
 	copy(other.nextIndexes, other.nextIndexes + graph->getSize(), nextIndexes);
+			if(!validate()) {
+				cout<<"copy"<<endl;
+				exit(0);
+			}
 }
 
 Specimen& Specimen::operator=(const Specimen& other) {
@@ -46,6 +54,10 @@ Specimen& Specimen::operator=(const Specimen& other) {
 		delete[]nextIndexes;
 		nextIndexes = new int[graph->getSize()];
 		copy(other.nextIndexes, other.nextIndexes + graph->getSize(), nextIndexes);
+			if(!validate()) {
+				cout<<"operator"<<endl;
+				exit(0);
+			}
 	}
 	return *this;
 }
@@ -62,8 +74,14 @@ Specimen::~Specimen() {
 Specimen Specimen::mutate() {
 	int randomWord1 = rand() % graph->getSize();
 	int randomWord2 = rand() % graph->getSize();
+	if(!validate())
+		exit(0);
 	Specimen mutant(graph, nextIndexes, start);
 	mutant.swapWords(randomWord1,randomWord2);
+	if(!mutant.validate()) {
+		cout<<"mutacja"<<endl;
+		exit(0);
+	}
 	return mutant;
 }
 
@@ -81,7 +99,7 @@ Specimen Specimen::scx(Specimen second) {
 	tmp = childStart;
 	visited.at(childStart) = true;
 	int alfa, beta; //kandydaci na następne słowo z każdego rodzica
-	for (int i=0; i<graph->getSize(); i++) {
+	for (int i=1; i<graph->getSize(); i++) {
 		alfa = getNextIndex(tmp);
 		beta = second.getNextIndex(tmp);
 		//cout<<alfa<<" "<<beta<<endl;
@@ -101,6 +119,7 @@ Specimen Specimen::scx(Specimen second) {
 				}
 			}
 		}
+		//cout<<alfa<<" "<<visited.at(alfa)<<" "<<beta<<" "<<visited.at(beta)<<endl;
 		//if (graph->getOverlap(tmp, alfa) < graph->getOverlap(tmp, beta)) {
 		if (graph->getOverlap(tmp, alfa) * (85 + rand()%15) < graph->getOverlap(tmp, beta) * (85 + rand()%15)) {
 			visited.at(alfa) = true;
@@ -113,8 +132,13 @@ Specimen Specimen::scx(Specimen second) {
 			tmp = beta;
 		}
 	}
+	childNextIndexes[tmp] = childStart;
 	//exit(NULL);
 	Specimen child(graph,childNextIndexes,childStart);
+	if(!child.validate()) {
+				cout<<"scx"<<endl;
+				exit(0);
+			}
 	delete[] childNextIndexes;
 	return child;
 }
@@ -138,7 +162,7 @@ void Specimen::fix(vector<bool>& visited, queue<int>& toFix) {
 	*/
 }
 
-bool Specimen::validate() {
+bool Specimen::validate() const{
 	vector<bool> visited(graph->getSize());
 
 	for (int i=0; i<graph->getSize(); i++) {
@@ -171,7 +195,7 @@ int Specimen::calculateFitness() {
 	return result;
 }
 
-void Specimen::print() {
+void Specimen::print() const{
 	int tmp = start;
 	for (int i=0; i<graph->getSize(); i++) {
 		cout<<tmp<<' ';
@@ -192,8 +216,10 @@ void Specimen::printStats() const {
 	cout<<"Specimen size: "<<graph->getSize()<<endl;
 	cout<<"Specimen fitness: "<<fitness<<endl;
 	cout<<"Specimen full_alignment_length: "<<full_alignment_length<<endl;
-	if(fitness == graph->getSize())
+	if(fitness == graph->getSize()) {
+		this->print();
 		exit(0);
+	}
 }
 
 bool Specimen::compare(Specimen a, Specimen b) {

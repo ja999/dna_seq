@@ -34,8 +34,8 @@ class Specimen {
 		static bool compare(Specimen a, Specimen b);
 		//bool Specimen::operator==(const Specimen& other);
 		int calculateFitness();
-		bool validate();
-		void print();
+		bool validate() const;
+		void print() const;
 		void printStats() const;
 		void swapWords(int a, int b);
 		Specimen mutate();
