@@ -56,21 +56,22 @@ void Population::sortPopulation() {
 }
 
 void Population::scxCrossover() {
-	vector<Specimen> offsprings;//(size/4, objects[0]);
+	vector<Specimen> offsprings(size/2, objects[0]);
 	//cout<<"inSCX before for"<<endl;
-	for (int i=0; i<size/4; i++) {
+	#pragma omp parallel for
+	for (int i=0; i<size/2; i++) {
 	//cout<<"inSCX in for i: "<<i<<endl;
-		Specimen a = objects[i];
+		Specimen a = objects[i < size/2 ? i : rand() % size];
 		Specimen b = objects[rand() % size];
 		//cout<<"inSCX in for i: "<<i<<" before scx"<<endl;
 		//cout<<"inSCX in for i: "<<i<<" after scx"<<endl;
-		//offsprings.at(i) = c;
-		offsprings.push_back(a.scx(b));
+		offsprings.at(i) = a.scx(b);
+		//offsprings.push_back(a.scx(b));
 	}
 	//cout<<"inSCX before insert"<<endl;
 	//specimenSet->insert(offsprings.begin(),offsprings.end());
 	//cout<<"inSCX"<<endl;
-	
+	/*
 	for (int i=0; i<size/4; i++) {
 		int random = rand() % size;
 		int random2 = rand() % size;
@@ -82,6 +83,7 @@ void Population::scxCrossover() {
 		offsprings.push_back(a.scx(b));
 		//offsprings.push_back(c);
 	}
+	*/
 	specimenSet->insert(offsprings.begin(),offsprings.end());
 	offsprings.clear();
 }
@@ -129,7 +131,7 @@ void Population::getNextGeneration() {
 
 void Population::merge(Population second) {
 	specimenSet->insert(second.specimenSet->begin(),second.specimenSet->end());
-	size = specimenSet->size();
+	size = specimenSet->size() > 600 ? 600 : specimenSet->size();
 	second.objects.clear();
 	second.specimenSet->clear();
 }
