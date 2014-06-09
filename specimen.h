@@ -7,6 +7,7 @@
 #include <string>
 #include <queue>
 #include "wordsGraph.h"
+#include "parameters.h"
 
 using namespace std;
 
