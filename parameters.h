@@ -3,5 +3,6 @@
 
 #define POPULATION_COUNT 20
 #define GENERATION_COUNT 5
+#define SCX_PROBABILITY 75
 
 #endif /* PARAMETERS_H */

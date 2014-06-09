@@ -119,7 +119,7 @@ Specimen Specimen::scx(Specimen second) {
 		}
 		//cout<<alfa<<" "<<visited.at(alfa)<<" "<<beta<<" "<<visited.at(beta)<<endl;
 		//if (graph->getOverlap(tmp, alfa) < graph->getOverlap(tmp, beta)) {
-		if (graph->getOverlap(tmp, alfa) * (85 + rand()%15) < graph->getOverlap(tmp, beta) * (85 + rand()%15)) {
+		if (graph->getOverlap(tmp, alfa) * ((100-SCX_PROBABILITY) + rand()%SCX_PROBABILITY) < graph->getOverlap(tmp, beta) * ((100-SCX_PROBABILITY) + rand()%SCX_PROBABILITY)) {
 			visited.at(alfa) = true;
 			childNextIndexes[tmp] = alfa;
 			tmp = alfa;
