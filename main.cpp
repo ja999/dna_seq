@@ -65,5 +65,6 @@ int main(int argc, char* argv[]) {
 			populations.erase(populations.begin()+i);
 		}
 	}
+	(*populations.front().specimenSet->begin()).print();
 	return 0;
 }
