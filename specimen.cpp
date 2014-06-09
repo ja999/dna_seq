@@ -19,10 +19,10 @@ Specimen::Specimen(WordsGraph *graph) : graph(graph), fitness(-1), full_alignmen
 	}
 	start = rand()%graph->getSize();
 	calculateFitness();
-			if(!validate()) {
-				cout<<"gr"<<endl;
-				exit(0);
-			}
+	DEBUG_IF (!validate()) {
+		cout<<"gr"<<endl;
+		exit(0);
+	}
 }
 
 Specimen::Specimen(WordsGraph *graph, int * nextIndexes, int start) :
@@ -38,10 +38,10 @@ Specimen::Specimen(const Specimen& other) :
 		obj++;
 	nextIndexes = new int[graph->getSize()];
 	copy(other.nextIndexes, other.nextIndexes + graph->getSize(), nextIndexes);
-			if(!validate()) {
-				cout<<"copy"<<endl;
-				exit(0);
-			}
+	DEBUG_IF (!validate()) {
+		cout<<"copy"<<endl;
+		exit(0);
+	}
 }
 
 Specimen& Specimen::operator=(const Specimen& other) {
@@ -54,10 +54,10 @@ Specimen& Specimen::operator=(const Specimen& other) {
 		delete[]nextIndexes;
 		nextIndexes = new int[graph->getSize()];
 		copy(other.nextIndexes, other.nextIndexes + graph->getSize(), nextIndexes);
-			if(!validate()) {
-				cout<<"operator"<<endl;
-				exit(0);
-			}
+		DEBUG_IF (!validate()) {
+			cout<<"operator"<<endl;
+			exit(0);
+		}
 	}
 	return *this;
 }
@@ -74,11 +74,9 @@ Specimen::~Specimen() {
 Specimen Specimen::mutate() {
 	int randomWord1 = rand() % graph->getSize();
 	int randomWord2 = rand() % graph->getSize();
-	if(!validate())
-		exit(0);
 	Specimen mutant(graph, nextIndexes, start);
 	mutant.swapWords(randomWord1,randomWord2);
-	if(!mutant.validate()) {
+	DEBUG_IF (!mutant.validate()) {
 		cout<<"mutacja"<<endl;
 		exit(0);
 	}
@@ -135,7 +133,7 @@ Specimen Specimen::scx(Specimen second) {
 	childNextIndexes[tmp] = childStart;
 	//exit(NULL);
 	Specimen child(graph,childNextIndexes,childStart);
-	if(!child.validate()) {
+	DEBUG_IF (!child.validate()) {
 				cout<<"scx"<<endl;
 				exit(0);
 			}
