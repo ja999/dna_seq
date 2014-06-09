@@ -53,8 +53,10 @@ int main(int argc, char* argv[]) {
 		for (Population pop : populations)
 			(*pop.specimenSet->begin()).printStats();
 		//cout<<"pop"<<endl;
-		if (populations.size() == 1)
+		if (populations.size() == 1) {
+			(*populations.front().specimenSet->begin()).print();
 			return 0;
+		}
 
 		//cout<<"before merge"<<endl;
 		for (int i=0; i<populations.size()/2; i++) {
@@ -65,6 +67,5 @@ int main(int argc, char* argv[]) {
 			populations.erase(populations.begin()+i);
 		}
 	}
-	(*populations.front().specimenSet->begin()).print();
 	return 0;
 }
