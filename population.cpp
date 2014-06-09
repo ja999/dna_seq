@@ -5,8 +5,8 @@ Population::Population(WordsGraph *graph) {
   	bool(*fn_pt)(Specimen,Specimen) = Specimen::compare;
 	specimenSet = new set<Specimen,bool(*)(Specimen,Specimen)>(fn_pt);
 	while (specimenSet->size() <= size) {
-		Specimen spec(graph);
-		specimenSet->insert(spec);
+		//Specimen spec(graph);
+		specimenSet->emplace(graph);
 	}
 }
 
@@ -49,10 +49,10 @@ void Population::tpx(Specimen first, Specimen second) {
 }
 
 void Population::sortPopulation() {
-	//objects.clear();
+	objects.clear();
 	objects.assign(specimenSet->begin(),specimenSet->end());
 	//objects = *(new vector<Specimen>(specimenSet->begin(),specimenSet->end());
-	sort(objects.begin(), objects.end(), Specimen::compare);
+	//sort(objects.begin(), objects.end(), Specimen::compare);
 }
 
 void Population::scxCrossover() {
@@ -63,15 +63,14 @@ void Population::scxCrossover() {
 		Specimen a = objects[i];
 		Specimen b = objects[rand() % size];
 		//cout<<"inSCX in for i: "<<i<<" before scx"<<endl;
-		Specimen c = a.scx(b);
 		//cout<<"inSCX in for i: "<<i<<" after scx"<<endl;
 		//offsprings.at(i) = c;
-		offsprings.push_back(c);
+		offsprings.push_back(a.scx(b));
 	}
 	//cout<<"inSCX before insert"<<endl;
-	specimenSet->insert(offsprings.begin(),offsprings.end());
+	//specimenSet->insert(offsprings.begin(),offsprings.end());
 	//cout<<"inSCX"<<endl;
-
+	
 	for (int i=0; i<size/4; i++) {
 		int random = rand() % size;
 		int random2 = rand() % size;
@@ -79,10 +78,12 @@ void Population::scxCrossover() {
 		while (random == random2)
 			random2 = rand() % size;
 		Specimen b = objects[random2];
-		Specimen c = a.scx(b);
-		offsprings.at(i) = c;
+		//Specimen c = a.scx(b);
+		offsprings.push_back(a.scx(b));
+		//offsprings.push_back(c);
 	}
 	specimenSet->insert(offsprings.begin(),offsprings.end());
+	offsprings.clear();
 }
 
 void Population::tpxCrossover() {
@@ -101,29 +102,36 @@ void Population::mutate() {
 	for (int i = 0; i<size; i++)
 		if (rand() % 100 < 30) {
 			int randomSpecimen = rand() % size;
-			int randomWord1 = rand() % objects[randomSpecimen].graph->getSize();
-			int randomWord2 = rand() % objects[randomSpecimen].graph->getSize();
-			Specimen a = objects[randomSpecimen];
-			a.swapIndexes(randomWord1,randomWord2);
-			specimenSet->insert(a);
+			//Specimen a = objects[randomSpecimen].mutate();
+			specimenSet->insert(objects[randomSpecimen].mutate());
 		}
 }
 
 void Population::getNextGeneration() {
 	//vector<Specimen> newObjects;
+	//cout<<"before clear vector: "<<Specimen::obj<<" set size: "<<specimenSet->size()<<endl;
+	//objects.clear();
+	//cout<<"before sort: "<<Specimen::obj<<" set size: "<<specimenSet->size()<<endl;
 	sortPopulation();
+	//cout<<"after sort: "<<Specimen::obj<<" set size: "<<specimenSet->size()<<endl;
 	specimenSet->clear();
-	if (objects.size() > size) {
-		for (int i=0; i<size; i++) {
+	//cout<<"after clear set: "<<Specimen::obj<<" set size: "<<specimenSet->size()<<endl;
+	for (int i=0; i<objects.size(); i++) {
+		if (specimenSet->size() < size) {
 			specimenSet->insert(objects[i]);
 		}
 		//specimenSet->insert(newObjects.begin(),newObjects.end());
 	}
+	//cout<<"after fill set: "<<Specimen::obj<<" set size: "<<specimenSet->size()<<endl;
+	objects.clear();
+	//cout<<"after clear vector: "<<Specimen::obj<<" set size: "<<specimenSet->size()<<endl;
 }
 
 void Population::merge(Population second) {
 	specimenSet->insert(second.specimenSet->begin(),second.specimenSet->end());
 	size = specimenSet->size();
+	second.objects.clear();
+	second.specimenSet->clear();
 }
 
 void Population::evolve() {

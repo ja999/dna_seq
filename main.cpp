@@ -28,37 +28,39 @@ int main(int argc, char* argv[]) {
 		return 0;
 	}
   srand(unsigned(time(0)));
-	vector<Population*> populations;
+	vector<Population> populations;
 	vector<Word> words;
 	getData(words);
 	WordsGraph *graph = new WordsGraph(words, atoi(argv[1]));
 	cout<<graph->getN()<<endl;
 
-	cout<<"TEST"<<endl;
 	for (int i=0; i<POPULATION_COUNT; i++) {
-		populations.push_back(new Population(graph));
+		populations.emplace_back(graph);
 	}
-	cout<<"TEST"<<endl;
 
 	while (populations.size() > 0) {
 		for (int i=0; i<GENERATION_COUNT; i++) {
 			cout<<populations.size()<<endl;
 
-			#pragma omp parallel for
+			//#pragma omp parallel for
 			for (int i=0; i<populations.size(); i++) {
-				populations[i]->evolve();
+				populations[i].evolve();
 				//populations[i]->objects.front().printStats();
 			}
 		}
 
-		for (Population* pop : populations)
-			pop->objects.front().printStats();
+		//cout<<"after evolve"<<endl;
+		for (Population pop : populations)
+			(*pop.specimenSet->begin()).printStats();
+		//cout<<"pop"<<endl;
 		if (populations.size() == 1)
 			return 0;
 
+		//cout<<"before merge"<<endl;
 		for (int i=0; i<populations.size()/2; i++) {
-			populations.at(2*i)->merge(*(populations.at(2*i+1)));
+			populations.at(2*i).merge(populations.at(2*i+1));
 		}
+		//cout<<"before erase"<<endl;
 		for (int i=1; i<populations.size(); i++) {
 			populations.erase(populations.begin()+i);
 		}

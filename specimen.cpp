@@ -1,10 +1,13 @@
 #include "specimen.h"
+int Specimen::obj=0;
+bool Specimen::clear=false;
 
 int Specimen::getNextIndex(int index) {
 	return nextIndexes[index];
 }
 
 Specimen::Specimen(WordsGraph *graph) : graph(graph), fitness(-1), full_alignment_length(-1) {
+		obj++;
 	nextIndexes = new int[graph->getSize()];
 	vector<int> specimen_indexes;
 	for (int i=0; i<graph->getSize(); i++) {
@@ -15,49 +18,53 @@ Specimen::Specimen(WordsGraph *graph) : graph(graph), fitness(-1), full_alignmen
 		nextIndexes[specimen_indexes.at(i)] = specimen_indexes.at((i+1)%specimen_indexes.size());
 	}
 	start = rand()%graph->getSize();
-	//cout<<"SPEC"<<endl;
-	//int tmp = start;
-	/*
-	do {
-		cout<<tmp<<" ";
-		tmp = nextIndexes[tmp];
-	} while (tmp!=start);
-	cout<<start<<endl;
-	/*
-	nextIndexes[0]=0;
-	for (int i=1; i<graph->getSize(); i++) {
-		nextIndexes[i]=i;
-		swap(nextIndexes[i], nextIndexes[rand()%i]);	
-	}
-	*/
 	calculateFitness();
 }
 
 Specimen::Specimen(WordsGraph *graph, int * nextIndexes, int start) :
 		graph(graph), nextIndexes(nextIndexes), start(start), fitness(-1), full_alignment_length(-1) {
-	/*
-	int tmp=start;
-	do {
-		cout<<nextIndexes[tmp]<<" ";
-		tmp=nextIndexes[tmp];
-	} while (tmp!=start);
-	//vector<bool> visited(graph->getSize());
-	/*
-	queue<int> toFix;
-	int tmp = start;
-	for (int i=0; i<graph->getSize(); i++) {
-		if (!visited.at(tmp)) {
-			visited.at(tmp) = true;
-			tmp=nextIndexes[tmp];
-		}
-		else {
-			toFix.push(i);
-		}
-	}
-	if(!toFix.empty()) 
-		fix(visited, toFix);
-		*/
+		obj++;
+	this->nextIndexes = new int[graph->getSize()];
+	copy(nextIndexes, nextIndexes + graph->getSize(), this->nextIndexes);
 	calculateFitness();
+}
+
+Specimen::Specimen(const Specimen& other) :
+		graph(other.graph), start(other.start), fitness(other.fitness), full_alignment_length(other.full_alignment_length) {
+		obj++;
+	nextIndexes = new int[graph->getSize()];
+	copy(other.nextIndexes, other.nextIndexes + graph->getSize(), nextIndexes);
+}
+
+Specimen& Specimen::operator=(const Specimen& other) {
+	if (this != &other) {
+		//obj++;
+		start = other.start;
+		graph = other.graph;
+		fitness = other.fitness;
+		full_alignment_length = other.full_alignment_length;
+		delete[]nextIndexes;
+		nextIndexes = new int[graph->getSize()];
+		copy(other.nextIndexes, other.nextIndexes + graph->getSize(), nextIndexes);
+	}
+	return *this;
+}
+
+
+Specimen::~Specimen() {
+	delete[] nextIndexes;
+	obj--;
+	if(clear)
+		cout<<obj<<" ";
+}
+/*
+*/
+Specimen Specimen::mutate() {
+	int randomWord1 = rand() % graph->getSize();
+	int randomWord2 = rand() % graph->getSize();
+	Specimen mutant(graph, nextIndexes, start);
+	mutant.swapWords(randomWord1,randomWord2);
+	return mutant;
 }
 
 Specimen Specimen::scx(Specimen second) {
@@ -108,6 +115,7 @@ Specimen Specimen::scx(Specimen second) {
 	}
 	//exit(NULL);
 	Specimen child(graph,childNextIndexes,childStart);
+	delete[] childNextIndexes;
 	return child;
 }
 
@@ -180,7 +188,7 @@ void Specimen::print() {
 		cout<<"false"<<endl;
 }
 
-void Specimen::printStats() {
+void Specimen::printStats() const {
 	cout<<"Specimen size: "<<graph->getSize()<<endl;
 	cout<<"Specimen fitness: "<<fitness<<endl;
 	cout<<"Specimen full_alignment_length: "<<full_alignment_length<<endl;
@@ -205,9 +213,14 @@ bool Specimen::compare(Specimen a, Specimen b) {
 	}
 }
 
-void Specimen::swapIndexes(int a, int b) {
-	if (getNextIndex(a) != b && getNextIndex(b) != a)
-		swap(nextIndexes[a], nextIndexes[b]);
+void Specimen::swapWords(int a, int b) {
+	if (nextIndexes[a] == start)
+		start = nextIndexes[b];
+	else if (nextIndexes[b] == start)
+		start = nextIndexes[a];
+	swap(nextIndexes[a], nextIndexes[b]);
+	swap(nextIndexes[nextIndexes[a]], nextIndexes[nextIndexes[b]]);
+	calculateFitness();
 }
 /*
 bool Specimen::compare(Specimen a, Specimen b) {
