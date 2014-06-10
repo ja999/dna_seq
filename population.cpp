@@ -101,12 +101,17 @@ void Population::tpxCrossover() {
 }
 
 void Population::mutate() {
+	vector<Specimen> mutants(size, objects[0]);
+	#pragma omp parallel for
 	for (int i = 0; i<size; i++)
 		if (rand() % 100 < 30) {
 			int randomSpecimen = rand() % size;
 			//Specimen a = objects[randomSpecimen].mutate();
-			specimenSet->insert(objects[randomSpecimen].mutate());
+			//specimenSet->insert(objects[randomSpecimen].mutate());
+			mutants.at(i) = objects[randomSpecimen].mutate();
 		}
+	specimenSet->insert(mutants.begin(),mutants.end());
+	mutants.clear();
 }
 
 void Population::getNextGeneration() {
